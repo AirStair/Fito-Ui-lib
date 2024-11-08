@@ -19,3 +19,8 @@
             ceShadow('slot[name=a]', 'slot content');
         }, 5000)
 ```
+```html
+    <ce-shadow>
+      <span slot="a"></span>
+    </ce-shadow>
+```

@@ -18,7 +18,7 @@ setTimeout(() => {
 }, 5000)
 ```
 ```html
-    <ce-fito>
-      <span slot="fito"></span>
-    </ce-fito>
+<ce-fito>
+  <span slot="fito"></span>
+</ce-fito>
 ```

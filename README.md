@@ -3,22 +3,21 @@
 ![Fito-Ui-lib](fito.png "Fito-Ui-lib")
 
 ```js
-const ceFito = ce.ceFito`
-  <div class="ceFito">
-    <slot name="ceFito"></slot>
+const ceFito = ce.ceFito(['title'])`
+  <h1 class="title">{{title}}</h1>
+  <div>
+    <slot name="fito"></slot>
   </div>
   <style>
-    .ceFito {
+    .title {
       color: green;
     }
   </style>
 `;
-setTimeout(() => {
-  ceFito('slot[name=ceFito]', 'slot content')
-}, 5000)
+ceFito.ceFito = 'slot content'
 ```
 ```html
-<ce-fito>
-  <span slot="fito"></span>
+<ce-fito title="Fito">
+  <span slot="fito">fito</span>
 </ce-fito>
 ```

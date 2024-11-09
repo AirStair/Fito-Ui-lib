@@ -12,7 +12,7 @@ export const ce = new Proxy({}, {
       static observedAttributes = observedAttributes
       attributeChangedCallback(name, oldValue, newValue) {
         if (oldValue !== newValue) {
-          this.shadow.innerHTML = this.shadow.innerHTML.replace(`{{${name}}}`, newValue);
+          this.shadow.innerHTML = this.shadow.innerHTML.replaceAll(`{{${name}}}`, newValue);
         }
       }
     }

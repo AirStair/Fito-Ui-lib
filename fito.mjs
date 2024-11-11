@@ -1,23 +1,25 @@
 const ce = new Proxy({}, {
   get: (...[target, key]) => (observedAttributes = []) => (raw, ...values) => {
     const name = key.split(/(?=[A-Z])/).join('-').toLowerCase();
+    const template = String.raw({ raw }, ...values);
     class Ce extends HTMLElement {
       constructor() {
         super();
-        const shadow = this.attachShadow({ mode: 'closed' });
-        shadow.innerHTML = String.raw({ raw }, ...values);
-        globalThis[key] = (key, value) => {
-          this.setAttribute(key, value);
-        }
+        this.shadow = this.attachShadow({ mode: 'closed' });
+        this.shadow.innerHTML = template;
+        globalThis[key] = this.shadow;
+        target.shadow = this.shadow;
       }
       static observedAttributes = observedAttributes
       attributeChangedCallback(name, oldValue, newValue) {
         if (oldValue !== newValue) {
-          const element = this.querySelector(`[${name}]`);
-          element.setAttribute(name, newValue);
+          this.shadow.innerHTML = template.replaceAll(`{{${name}}}`, newValue);
         }
       }
     }
     customElements.define(name, Ce);
+    return () => {
+      customElements.upgrade(target.shadow)
+    }
   }
 });
